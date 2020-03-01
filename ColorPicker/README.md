@@ -2,9 +2,9 @@
 
 ### Screenshots
 
-![Purple](Screenshot1.png)
+![](Screenshot1.PNG)
 
 
-![Lime](Screenshot2.png)
+![](Screenshot2.PNG)
 
 *Press Esc to close program*
