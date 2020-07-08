@@ -10,6 +10,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })   // body pars
 app.set('view engine', 'ejs');
 
 app.use('/scripts', express.static('scripts'));
+app.use('/styles', express.static('styles'));
 
 app.get('/todolist', urlencodedParser, (req, res) => {
     showAllTasks(res);
@@ -17,10 +18,10 @@ app.get('/todolist', urlencodedParser, (req, res) => {
 
 app.post('/todolist', urlencodedParser, (req, res) => {
     console.log(req.body.task);
-    let value =req.body.task;
+    let value = req.body.task;
     let sql = "INSERT INTO todolist(task) VALUES (?)"
-    
-    mysqlConnection.query(sql,[value], (err, result, fields) => {
+
+    mysqlConnection.query(sql, [value], (err, result, fields) => {
         // res.render('todolist', { data: result }); this way doesn't work
         // console.log(err);
         // res.send(result);
@@ -28,12 +29,12 @@ app.post('/todolist', urlencodedParser, (req, res) => {
     })
 });
 
-app.get('/todolist/:delitem', function(req,res){
+app.get('/todolist/:delitem', function (req, res) {
     // res.send(req.params.delitem);
     let deletedItem = req.params.delitem;
     let sql = "DELETE FROM todolist WHERE task = ?"
 
-    mysqlConnection.query(sql,[deletedItem],(err, result, fields)=>{
+    mysqlConnection.query(sql, [deletedItem], (err, result, fields) => {
         console.log(err);
         showAllTasks(res);
     })
