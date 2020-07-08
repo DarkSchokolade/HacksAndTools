@@ -9,6 +9,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })   // body pars
 
 app.set('view engine', 'ejs');
 
+app.use('/scripts', express.static('scripts'));
+
 app.get('/todolist', urlencodedParser, (req, res) => {
     showAllTasks(res);
 });
@@ -25,6 +27,17 @@ app.post('/todolist', urlencodedParser, (req, res) => {
         showAllTasks(res);
     })
 });
+
+app.get('/todolist/:delitem', function(req,res){
+    // res.send(req.params.delitem);
+    let deletedItem = req.params.delitem;
+    let sql = "DELETE FROM todolist WHERE task = ?"
+
+    mysqlConnection.query(sql,[deletedItem],(err, result, fields)=>{
+        console.log(err);
+        showAllTasks(res);
+    })
+})
 
 function showAllTasks(res) {
     mysqlConnection.query("SELECT * FROM todolist", (err, result, fields) => {
