@@ -17,16 +17,20 @@ app.get('/todolist', urlencodedParser, (req, res) => {
 });
 
 app.post('/todolist', urlencodedParser, (req, res) => {
-    console.log(req.body.task);
+    // console.log(req.body.task);
     let value = req.body.task;
     let sql = "INSERT INTO todolist(task) VALUES (?)"
 
-    mysqlConnection.query(sql, [value], (err, result, fields) => {
-        // res.render('todolist', { data: result }); this way doesn't work
-        // console.log(err);
-        // res.send(result);
-        showAllTasks(res);
-    })
+    if (value !== "") {
+        mysqlConnection.query(sql, [value], (err, result, fields) => {
+            // res.render('todolist', { data: result }); this way doesn't work
+            // console.log(err);
+            // res.send(result);
+            showAllTasks(res);
+        })
+    }
+    else showAllTasks(res);
+
 });
 
 app.get('/todolist/:delitem', function (req, res) {
