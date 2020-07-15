@@ -1,3 +1,6 @@
-const fs = require('fs')
+const getNotes = require('./notes');
+const validator = require('validator');
 
-fs.appendFileSync('book.txt','I am just faking');
+console.log(getNotes());
+
+console.log(validator.isEmail('sks@yah.com'));
